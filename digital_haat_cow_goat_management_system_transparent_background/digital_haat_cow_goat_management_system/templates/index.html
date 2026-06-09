@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Digital Haat Management System{% endblock %}
+{% block page_subtitle %}Manage cows, goats, health, feeding, expenses and sales in one place{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-overlay-card">
+        <span class="hero-badge">Smart Livestock Business Platform</span>
+        <h2>Professional Cow & Goat Haat Management</h2>
+        <p>
+            Keep all cattle and goat records organized with animal profiles, health tracking,
+            feeding cost, expenses, sales and profit reports.
+        </p>
+        <div class="hero-buttons">
+            <a class="primary-button" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+            <a class="secondary-button" href="{{ url_for('add_animal') }}">Add New Animal</a>
+        </div>
+    </div>
+</section>
+
+<section class="quick-stats">
+    <div class="stat-card glass-card">
+        <p>Total Animals</p>
+        <h3>{{ total_animals }}</h3>
+    </div>
+    <div class="stat-card glass-card">
+        <p>Available</p>
+        <h3>{{ available_animals }}</h3>
+    </div>
+    <div class="stat-card glass-card">
+        <p>Sold</p>
+        <h3>{{ sold_animals }}</h3>
+    </div>
+</section>
+
+<section class="content-grid two-columns">
+    <div class="panel-card">
+        <div class="section-heading">
+            <h3>Main Features</h3>
+            <p>Everything needed for a livestock haat or farm business.</p>
+        </div>
+        <div class="feature-list">
+            <div class="feature-item">
+                <span>🐄</span>
+                <div>
+                    <h4>Cow & Goat Profiles</h4>
+                    <p>Store breed, age, weight, purchase price, status and location.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span>💉</span>
+                <div>
+                    <h4>Health Management</h4>
+                    <p>Track vaccination, treatment, checkup, doctor and medicine.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span>🌾</span>
+                <div>
+                    <h4>Feeding & Cost</h4>
+                    <p>Record feed quantity, cost and daily feeding notes.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span>📈</span>
+                <div>
+                    <h4>Sales & Reports</h4>
+                    <p>Calculate sale value, total cost and estimated business result.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-card image-panel">
+        <div class="image-card-image"></div>
+        <div class="image-card-text">
+            <h3>Premium Haat Ready Design</h3>
+            <p>The interface uses your selected red Brahman cattle photo as the main transparent glass-style background.</p>
+        </div>
+    </div>
+</section>
+
+<section class="panel-card">
+    <div class="section-heading horizontal-heading">
+        <div>
+            <h3>Latest Livestock</h3>
+            <p>Recently added animals in your digital haat.</p>
+        </div>
+        <a class="small-link-button" href="{{ url_for('animals') }}">View All</a>
+    </div>
+
+    <div class="animal-card-row">
+        {% for animal in latest_animals %}
+            <a class="animal-mini-card" href="{{ url_for('animal_detail', animal_id=animal.id) }}">
+                <span>{{ animal.animal_type }}</span>
+                <h4>{{ animal.name }}</h4>
+                <p>{{ animal.breed }} • {{ animal.weight_kg }} kg</p>
+            </a>
+        {% else %}
+            <p class="empty-text">No animal added yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

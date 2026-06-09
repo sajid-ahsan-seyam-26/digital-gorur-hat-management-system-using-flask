@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Add New Animal{% endblock %}
+{% block page_subtitle %}Create a complete profile for cow or goat{% endblock %}
+
+{% block content %}
+<section class="panel-card form-panel">
+    <form method="POST" action="{{ url_for('add_animal') }}" class="main-form">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Tag Number</label>
+                <input type="text" name="tag_number" placeholder="Example: COW-1003" required>
+            </div>
+            <div class="form-group">
+                <label>Animal Type</label>
+                <select name="animal_type" required>
+                    <option value="Cow">Cow</option>
+                    <option value="Goat">Goat</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Example: Red King" required>
+            </div>
+            <div class="form-group">
+                <label>Breed</label>
+                <input type="text" name="breed" placeholder="Example: Brahman / Black Bengal" required>
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Age in Months</label>
+                <input type="number" name="age_months" min="0" required>
+            </div>
+            <div class="form-group">
+                <label>Weight KG</label>
+                <input type="number" step="0.01" name="weight_kg" min="0" required>
+            </div>
+            <div class="form-group">
+                <label>Purchase Price</label>
+                <input type="number" step="0.01" name="purchase_price" min="0" required>
+            </div>
+            <div class="form-group">
+                <label>Purchase Date</label>
+                <input type="date" name="purchase_date" value="{{ today_date }}" required>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" required>
+                    <option value="Available">Available</option>
+                    <option value="Sold">Sold</option>
+                    <option value="Sick">Sick</option>
+                    <option value="Quarantine">Quarantine</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label>Location</label>
+                <input type="text" name="location" placeholder="Example: Shed A / Goat Unit 1" required>
+            </div>
+            <div class="form-group full-width">
+                <label>Notes</label>
+                <textarea name="notes" placeholder="Write important details about this animal"></textarea>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit">Save Animal</button>
+            <a href="{{ url_for('animals') }}">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

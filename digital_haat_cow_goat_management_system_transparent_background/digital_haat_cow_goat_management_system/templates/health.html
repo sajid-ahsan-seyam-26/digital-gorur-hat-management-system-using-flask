@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Health Management{% endblock %}
+{% block page_subtitle %}Track vaccine, treatment, checkup and medical cost{% endblock %}
+
+{% block content %}
+<section class="content-grid two-columns align-start">
+    <div class="panel-card form-panel">
+        <div class="section-heading">
+            <h3>Add Health Record</h3>
+            <p>Record every vaccine, treatment and checkup.</p>
+        </div>
+        <form method="POST" action="{{ url_for('health_records') }}" class="main-form compact-form">
+            <div class="form-group">
+                <label>Select Animal</label>
+                <select name="animal_id" required>
+                    {% for animal in animals %}
+                        <option value="{{ animal.id }}">{{ animal.tag_number }} - {{ animal.name }} ({{ animal.animal_type }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group"><label>Date</label><input type="date" name="record_date" value="{{ today_date }}" required></div>
+            <div class="form-group">
+                <label>Record Type</label>
+                <select name="record_type" required>
+                    <option value="Vaccine">Vaccine</option>
+                    <option value="Treatment">Treatment</option>
+                    <option value="Checkup">Checkup</option>
+                    <option value="Deworming">Deworming</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Doctor Name</label><input type="text" name="doctor_name" placeholder="Veterinary doctor name" required></div>
+            <div class="form-group"><label>Medicine</label><input type="text" name="medicine" placeholder="Medicine or vaccine name"></div>
+            <div class="form-group"><label>Cost</label><input type="number" step="0.01" name="cost" value="0" min="0" required></div>
+            <div class="form-group"><label>Notes</label><textarea name="notes" placeholder="Write symptoms, advice or next appointment"></textarea></div>
+            <button type="submit">Save Health Record</button>
+        </form>
+    </div>
+
+    <div class="panel-card">
+        <div class="section-heading">
+            <h3>Health Record List</h3>
+            <p>Latest records appear first.</p>
+        </div>
+        <div class="table-wrapper large-table">
+            <table>
+                <thead>
+                    <tr><th>Date</th><th>Animal</th><th>Type</th><th>Doctor</th><th>Medicine</th><th>Cost</th></tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                        <tr>
+                            <td>{{ record.record_date }}</td>
+                            <td><a href="{{ url_for('animal_detail', animal_id=record.animal.id) }}">{{ record.animal.name }}</a></td>
+                            <td>{{ record.record_type }}</td>
+                            <td>{{ record.doctor_name }}</td>
+                            <td>{{ record.medicine }}</td>
+                            <td>৳ {{ record.cost }}</td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="6">No health record found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

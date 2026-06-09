@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Business Dashboard{% endblock %}
+{% block page_subtitle %}Real-time overview of your cow and goat business{% endblock %}
+
+{% block content %}
+<section class="dashboard-banner">
+    <div>
+        <span>Digital Haat Overview</span>
+        <h2>Track livestock, health, cost and sales professionally.</h2>
+        <p>Use this dashboard to understand your current business condition quickly.</p>
+    </div>
+</section>
+
+<section class="quick-stats dashboard-stats">
+    <div class="stat-card"><p>Total Animals</p><h3>{{ total_animals }}</h3></div>
+    <div class="stat-card"><p>Cows</p><h3>{{ total_cows }}</h3></div>
+    <div class="stat-card"><p>Goats</p><h3>{{ total_goats }}</h3></div>
+    <div class="stat-card"><p>Available</p><h3>{{ available_animals }}</h3></div>
+    <div class="stat-card"><p>Sold</p><h3>{{ sold_animals }}</h3></div>
+</section>
+
+<section class="content-grid four-columns">
+    <div class="money-card"><p>Purchase Value</p><h3>৳ {{ '%.2f'|format(purchase_value) }}</h3></div>
+    <div class="money-card"><p>Health Cost</p><h3>৳ {{ '%.2f'|format(health_cost) }}</h3></div>
+    <div class="money-card"><p>Feeding Cost</p><h3>৳ {{ '%.2f'|format(feeding_cost) }}</h3></div>
+    <div class="money-card"><p>Sales Value</p><h3>৳ {{ '%.2f'|format(sales_value) }}</h3></div>
+</section>
+
+<section class="profit-box {% if estimated_profit >= 0 %}profit-positive{% else %}profit-negative{% endif %}">
+    <p>Estimated Business Result</p>
+    <h2>৳ {{ '%.2f'|format(estimated_profit) }}</h2>
+    <span>Sales - Purchase - Health - Feeding - Other Expenses</span>
+</section>
+
+<section class="content-grid two-columns">
+    <div class="panel-card">
+        <div class="section-heading">
+            <h3>Recent Livestock</h3>
+            <p>Last 5 added animals.</p>
+        </div>
+        <div class="simple-list">
+            {% for animal in recent_animals %}
+                <a href="{{ url_for('animal_detail', animal_id=animal.id) }}">
+                    <span>{{ animal.tag_number }}</span>
+                    <strong>{{ animal.name }}</strong>
+                    <small>{{ animal.animal_type }} • {{ animal.status }}</small>
+                </a>
+            {% else %}
+                <p class="empty-text">No animal found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="panel-card">
+        <div class="section-heading">
+            <h3>Recent Health Records</h3>
+            <p>Latest checkup, vaccine and treatment records.</p>
+        </div>
+        <div class="simple-list">
+            {% for record in recent_health %}
+                <a href="{{ url_for('animal_detail', animal_id=record.animal.id) }}">
+                    <span>{{ record.record_date.strftime('%d %b %Y') }}</span>
+                    <strong>{{ record.animal.name }}</strong>
+                    <small>{{ record.record_type }} • ৳ {{ record.cost }}</small>
+                </a>
+            {% else %}
+                <p class="empty-text">No health record found.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

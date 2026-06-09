@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Livestock Records{% endblock %}
+{% block page_subtitle %}Search, filter and manage all cow and goat profiles{% endblock %}
+
+{% block content %}
+<section class="panel-card">
+    <form class="filter-form" method="GET" action="{{ url_for('animals') }}">
+        <input type="text" name="search" placeholder="Search by name, tag or breed" value="{{ search_text }}">
+        <select name="animal_type">
+            <option value="">All Types</option>
+            <option value="Cow" {% if selected_type == 'Cow' %}selected{% endif %}>Cow</option>
+            <option value="Goat" {% if selected_type == 'Goat' %}selected{% endif %}>Goat</option>
+        </select>
+        <select name="status">
+            <option value="">All Status</option>
+            <option value="Available" {% if selected_status == 'Available' %}selected{% endif %}>Available</option>
+            <option value="Sold" {% if selected_status == 'Sold' %}selected{% endif %}>Sold</option>
+            <option value="Sick" {% if selected_status == 'Sick' %}selected{% endif %}>Sick</option>
+            <option value="Quarantine" {% if selected_status == 'Quarantine' %}selected{% endif %}>Quarantine</option>
+        </select>
+        <button type="submit">Filter</button>
+        <a class="small-link-button" href="{{ url_for('add_animal') }}">+ Add Animal</a>
+    </form>
+</section>
+
+<section class="animal-grid">
+    {% for animal in animals %}
+        <div class="livestock-card">
+            <div class="livestock-top">
+                <span class="tag-badge">{{ animal.tag_number }}</span>
+                <span class="status-badge status-{{ animal.status|lower }}">{{ animal.status }}</span>
+            </div>
+            <h3>{{ animal.name }}</h3>
+            <p>{{ animal.breed }}</p>
+            <div class="livestock-meta">
+                <span>{{ animal.animal_type }}</span>
+                <span>{{ animal.gender }}</span>
+                <span>{{ animal.weight_kg }} kg</span>
+                <span>{{ animal.age_months }} months</span>
+            </div>
+            <div class="price-line">
+                <span>Purchase Price</span>
+                <strong>৳ {{ '%.2f'|format(animal.purchase_price) }}</strong>
+            </div>
+            <div class="card-actions">
+                <a href="{{ url_for('animal_detail', animal_id=animal.id) }}">View</a>
+                <a href="{{ url_for('edit_animal', animal_id=animal.id) }}">Edit</a>
+                <form method="POST" action="{{ url_for('delete_animal', animal_id=animal.id) }}" class="delete-form">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="panel-card empty-panel">
+            <h3>No animal found</h3>
+            <p>Add your first cow or goat profile to start using the system.</p>
+            <a class="primary-button" href="{{ url_for('add_animal') }}">Add Animal</a>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

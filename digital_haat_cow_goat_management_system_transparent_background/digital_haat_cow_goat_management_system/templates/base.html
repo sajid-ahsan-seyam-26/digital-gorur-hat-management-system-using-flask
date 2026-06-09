@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title if title else 'Digital Haat Management System' }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="brand-box">
+                <div class="brand-icon">DH</div>
+                <div>
+                    <h2>Digital Haat</h2>
+                    <p>Cow & Goat Manager</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('animals') }}">Livestock</a>
+                <a href="{{ url_for('add_animal') }}">Add Animal</a>
+                <a href="{{ url_for('health_records') }}">Health</a>
+                <a href="{{ url_for('feeding_records') }}">Feeding</a>
+                <a href="{{ url_for('expenses') }}">Expenses</a>
+                <a href="{{ url_for('sales') }}">Sales</a>
+                <a href="{{ url_for('reports') }}">Reports</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Live Clock</p>
+                <strong id="liveClock">--:--:--</strong>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="menu-button" id="menuButton" type="button">☰</button>
+                <div>
+                    <h1>{% block page_title %}Digital Haat{% endblock %}</h1>
+                    <p>{% block page_subtitle %}Professional livestock business management{% endblock %}</p>
+                </div>
+            </header>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="message-area">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Business Reports{% endblock %}
+{% block page_subtitle %}Financial and livestock summary for decision making{% endblock %}
+
+{% block content %}
+<section class="report-hero">
+    <div>
+        <span>Professional Report</span>
+        <h2>Digital Haat Financial Summary</h2>
+        <p>Understand your business cost, sales value and current livestock condition.</p>
+    </div>
+</section>
+
+<section class="content-grid four-columns">
+    <div class="money-card"><p>Total Cows</p><h3>{{ total_cows }}</h3></div>
+    <div class="money-card"><p>Total Goats</p><h3>{{ total_goats }}</h3></div>
+    <div class="money-card"><p>Available</p><h3>{{ available_animals }}</h3></div>
+    <div class="money-card"><p>Sold</p><h3>{{ sold_animals }}</h3></div>
+</section>
+
+<section class="panel-card">
+    <div class="section-heading">
+        <h3>Financial Breakdown</h3>
+        <p>All values are calculated from database records.</p>
+    </div>
+    <div class="report-list">
+        <div><span>Livestock Purchase Value</span><strong>৳ {{ '%.2f'|format(purchase_value) }}</strong></div>
+        <div><span>Health Cost</span><strong>৳ {{ '%.2f'|format(health_cost) }}</strong></div>
+        <div><span>Feeding Cost</span><strong>৳ {{ '%.2f'|format(feeding_cost) }}</strong></div>
+        <div><span>Other Expense Cost</span><strong>৳ {{ '%.2f'|format(expense_cost) }}</strong></div>
+        <div><span>Total Known Cost</span><strong>৳ {{ '%.2f'|format(total_cost) }}</strong></div>
+        <div><span>Total Sales Value</span><strong>৳ {{ '%.2f'|format(sales_value) }}</strong></div>
+        <div class="final-result"><span>Net Business Result</span><strong>৳ {{ '%.2f'|format(net_result) }}</strong></div>
+    </div>
+</section>
+{% endblock %}

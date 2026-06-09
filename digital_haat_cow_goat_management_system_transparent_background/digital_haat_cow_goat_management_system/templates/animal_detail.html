@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block page_title %}{{ animal.name }}{% endblock %}
+{% block page_subtitle %}Complete profile for {{ animal.tag_number }}{% endblock %}
+
+{% block content %}
+<section class="detail-header-card">
+    <div>
+        <span class="tag-badge">{{ animal.tag_number }}</span>
+        <h2>{{ animal.name }}</h2>
+        <p>{{ animal.breed }} • {{ animal.animal_type }} • {{ animal.gender }}</p>
+    </div>
+    <div class="detail-actions">
+        <a href="{{ url_for('edit_animal', animal_id=animal.id) }}">Edit Profile</a>
+        <a href="{{ url_for('animals') }}">Back to List</a>
+    </div>
+</section>
+
+<section class="content-grid four-columns">
+    <div class="money-card"><p>Weight</p><h3>{{ animal.weight_kg }} KG</h3></div>
+    <div class="money-card"><p>Age</p><h3>{{ animal.age_months }} Months</h3></div>
+    <div class="money-card"><p>Purchase Price</p><h3>৳ {{ '%.2f'|format(animal.purchase_price) }}</h3></div>
+    <div class="money-card"><p>Status</p><h3>{{ animal.status }}</h3></div>
+</section>
+
+<section class="content-grid two-columns">
+    <div class="panel-card">
+        <div class="section-heading">
+            <h3>Basic Details</h3>
+            <p>Important profile information.</p>
+        </div>
+        <div class="info-list">
+            <p><strong>Location:</strong> {{ animal.location }}</p>
+            <p><strong>Purchase Date:</strong> {{ animal.purchase_date.strftime('%d %B %Y') }}</p>
+            <p><strong>Notes:</strong> {{ animal.notes if animal.notes else 'No notes added.' }}</p>
+        </div>
+    </div>
+    <div class="panel-card">
+        <div class="section-heading">
+            <h3>Cost Summary</h3>
+            <p>Animal-specific feeding and health cost.</p>
+        </div>
+        <div class="info-list">
+            <p><strong>Total Health Cost:</strong> ৳ {{ '%.2f'|format(total_health_cost) }}</p>
+            <p><strong>Total Feeding Cost:</strong> ৳ {{ '%.2f'|format(total_feeding_cost) }}</p>
+            <p><strong>Total Known Cost:</strong> ৳ {{ '%.2f'|format(animal.purchase_price + total_health_cost + total_feeding_cost) }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="content-grid two-columns">
+    <div class="panel-card">
+        <div class="section-heading horizontal-heading">
+            <div><h3>Health Records</h3><p>Vaccines, treatment and checkups.</p></div>
+            <a class="small-link-button" href="{{ url_for('health_records') }}">Add</a>
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead><tr><th>Date</th><th>Type</th><th>Doctor</th><th>Cost</th></tr></thead>
+                <tbody>
+                    {% for record in health_records %}
+                        <tr><td>{{ record.record_date }}</td><td>{{ record.record_type }}</td><td>{{ record.doctor_name }}</td><td>৳ {{ record.cost }}</td></tr>
+                    {% else %}
+                        <tr><td colspan="4">No health record found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel-card">
+        <div class="section-heading horizontal-heading">
+            <div><h3>Feeding Records</h3><p>Feed quantity and cost.</p></div>
+            <a class="small-link-button" href="{{ url_for('feeding_records') }}">Add</a>
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead><tr><th>Date</th><th>Feed</th><th>KG</th><th>Cost</th></tr></thead>
+                <tbody>
+                    {% for record in feeding_records %}
+                        <tr><td>{{ record.feeding_date }}</td><td>{{ record.feed_name }}</td><td>{{ record.quantity_kg }}</td><td>৳ {{ record.cost }}</td></tr>
+                    {% else %}
+                        <tr><td colspan="4">No feeding record found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="panel-card">
+    <div class="section-heading horizontal-heading">
+        <div><h3>Sale Records</h3><p>Buyer and payment information.</p></div>
+        <a class="small-link-button" href="{{ url_for('sales') }}">Record Sale</a>
+    </div>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Date</th><th>Buyer</th><th>Phone</th><th>Sale Price</th><th>Payment</th></tr></thead>
+            <tbody>
+                {% for record in sale_records %}
+                    <tr><td>{{ record.sale_date }}</td><td>{{ record.buyer_name }}</td><td>{{ record.buyer_phone }}</td><td>৳ {{ record.sale_price }}</td><td>{{ record.payment_status }}</td></tr>
+                {% else %}
+                    <tr><td colspan="5">No sale record found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
