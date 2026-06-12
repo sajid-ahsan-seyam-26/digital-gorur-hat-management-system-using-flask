@@ -60,13 +60,6 @@ http://127.0.0.1:5000
 
 The app uses SQLite. A database file named `digital_haat.db` will be created automatically when the app runs.
 
-## Beginner Notes
-
-- Main Python file: `app.py`
-- HTML templates: `templates/`
-- CSS design: `static/css/style.css`
-- JavaScript: `static/js/script.js`
-- Images: `static/images/`
 
 
 ## Design Update
