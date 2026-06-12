@@ -1,7 +1,3 @@
-// ------------------------------------------------------------
-// Digital Haat Cow & Goat Management System
-// Beginner friendly JavaScript
-// ------------------------------------------------------------
 
 function updateLiveClock() {
     const clockElement = document.getElementById("liveClock");
