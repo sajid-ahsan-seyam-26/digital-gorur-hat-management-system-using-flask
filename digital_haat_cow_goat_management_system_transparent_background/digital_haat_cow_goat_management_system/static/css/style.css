@@ -1,7 +1,4 @@
-/* ------------------------------------------------------------
-   Digital Haat Cow & Goat Management System
-   Professional CSS, beginner friendly and easy to edit
------------------------------------------------------------- */
+
 
 :root {
     --dark-green: #10281f;
@@ -1034,13 +1031,6 @@ td a {
         grid-template-columns: 1fr;
     }
 }
-
-/* ------------------------------------------------------------
-   Transparent Background Update
-   This update uses ONLY the uploaded red Brahman cow photo as
-   the project background. Main cards are transparent/glass style
-   so the cow image stays clearly visible.
------------------------------------------------------------- */
 
 body {
     background:
