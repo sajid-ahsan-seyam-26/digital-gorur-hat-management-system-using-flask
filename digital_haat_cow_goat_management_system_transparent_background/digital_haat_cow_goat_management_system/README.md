@@ -64,5 +64,5 @@ The app uses SQLite. A database file named `digital_haat.db` will be created aut
 
 ## Design Update
 
-This remake uses the provided red Brahman cow photo as the main website background. The cards, forms, dashboard panels and tables use transparent glass-style CSS so the cow image stays clearly visible behind the interface.
+
 <img width="1795" height="836" alt="Image" src="https://github.com/user-attachments/assets/8e6d8654-cc35-465e-88df-ecb123a4d792" />
