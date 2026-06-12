@@ -1,23 +1,12 @@
 from datetime import date, datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-
-# ------------------------------------------------------------
-# Digital Haat - Cow & Goat Management System
-# Beginner friendly Flask + SQLAlchemy project
-# ------------------------------------------------------------
-
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "digital-haat-secret-key-change-this"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///digital_haat.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-
-
-# ------------------------------------------------------------
-# Database Models
-# ------------------------------------------------------------
 
 class Animal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,7 +33,7 @@ class HealthRecord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     animal_id = db.Column(db.Integer, db.ForeignKey("animal.id"), nullable=False)
     record_date = db.Column(db.Date, nullable=False)
-    record_type = db.Column(db.String(50), nullable=False)  # Vaccine, Treatment, Checkup
+    record_type = db.Column(db.String(50), nullable=False) 
     doctor_name = db.Column(db.String(100), nullable=False)
     medicine = db.Column(db.String(150), nullable=True)
     cost = db.Column(db.Float, nullable=False, default=0)
@@ -78,11 +67,6 @@ class SaleRecord(db.Model):
     sale_price = db.Column(db.Float, nullable=False)
     payment_status = db.Column(db.String(50), nullable=False)
     notes = db.Column(db.Text, nullable=True)
-
-
-# ------------------------------------------------------------
-# Helper Functions
-# ------------------------------------------------------------
 
 def convert_text_to_date(date_text):
     """Convert form date text into Python date object."""
@@ -126,11 +110,6 @@ def get_total_sales_value():
     for record in records:
         total = total + record.sale_price
     return total
-
-
-# ------------------------------------------------------------
-# Routes
-# ------------------------------------------------------------
 
 @app.route("/")
 def index():
@@ -463,12 +442,6 @@ def reports():
         available_animals=available_animals,
         sold_animals=sold_animals
     )
-
-
-# ------------------------------------------------------------
-# Seed Database with Sample Data
-# ------------------------------------------------------------
-
 def create_sample_data():
     animal_count = Animal.query.count()
 
@@ -522,11 +495,6 @@ def create_sample_data():
         db.session.add(cow_two)
         db.session.add(goat_one)
         db.session.commit()
-
-
-# ------------------------------------------------------------
-# App Start
-# ------------------------------------------------------------
 
 if __name__ == "__main__":
     with app.app_context():
